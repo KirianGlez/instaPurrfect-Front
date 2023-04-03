@@ -1,0 +1,17 @@
+@media screen and (orientation: landscape) {
+  /* Aplica estilos solo cuando la pantalla está en modo horizontal */
+  .posts { /* Establece el ancho máximo del div a 500px */
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+
+  .post {
+    max-width:300px;
+    height:400px;
+    margin: 0 auto;
+  }
+}
+.post {
+  max-width:500px;
+  margin: 0 auto;
+}

@@ -1,0 +1,64 @@
+.card {
+  text-align: center;
+  border-bottom-left-radius: 3em;
+  border-bottom-right-radius: 3em;
+}
+
+.card-body {
+  padding:0;
+  background-color: transparent !important;
+}
+
+.card-title{
+  margin: 0;
+}
+
+h4{
+  font-weight: bold !important;
+}
+
+.row{
+  margin: 0 !important;
+}
+
+.row>*{
+  padding: 0.4em !important;
+}
+
+.posts{
+  height: 550px;
+  overflow-y: scroll;
+}
+
+.kitties{
+  overflow-x: scroll;
+}
+
+::-webkit-scrollbar {display: none;}
+
+.kitty-name{
+  font-size:1em;
+}
+
+.picture{
+    height:4em;
+    width:4em;
+}
+
+@media screen and (orientation: landscape) {
+  /* Aplica estilos solo cuando la pantalla está en modo horizontal */
+  .posts { /* Establece el ancho máximo del div a 500px */
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+
+  .post {
+    max-width:300px;
+    height:400px;
+    margin: 0 auto;
+  }
+}
+.post {
+  max-width:250px;
+  margin: 0 auto !important;
+}

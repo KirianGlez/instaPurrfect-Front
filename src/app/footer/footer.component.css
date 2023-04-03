@@ -1,0 +1,15 @@
+.footer {
+  position: absolute;
+  bottom: 0px;
+  width:100%;
+  border-top-left-radius: 2.5em;
+  border-top-right-radius: 2.5em;
+  height:90px
+}
+
+.row{
+  margin-left: 0;
+  --bs-gutter-x: 0;
+}
+
+

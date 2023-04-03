@@ -1,0 +1,19 @@
+.posts{
+  height: 700px;
+  overflow-y: scroll;
+}
+::-webkit-scrollbar {display: none;}
+
+
+@media screen and (orientation: landscape) {
+  /* Aplica estilos solo cuando la pantalla está en modo horizontal */
+  .posts { /* Establece el ancho máximo del div a 500px */
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+
+  .post {
+    max-width:500px;
+    margin: 0 auto;
+  }
+}
