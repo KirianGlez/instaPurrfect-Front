@@ -38,7 +38,7 @@ export class PrruwnerPageComponent implements OnInit{
               (prruwner) => {
                 this.prruwner = prruwner;
                 this.prruwnerService.getPrruwnerKittyPosts(prruwner.prruwnerId).subscribe(
-                  kittyPost => {console.log(prruwner.prruwnerId);this.kittyPosts = kittyPost;}
+                  kittyPost => {this.kittyPosts = kittyPost;}
                 )
               },
               (error) => {

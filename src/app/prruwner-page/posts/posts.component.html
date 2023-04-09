@@ -1,7 +1,7 @@
 <div class="card border-white">
   <div class="card-body">
     <div class="row justify-content-start px-2">
-      <div class="rounded-circle col-3"><a routerLinkActive="active" [routerLink]="['/kitty/', post.kitty.kittyId]"><img class="rounded-circle" [src]="post.kitty.kittyPicture" width="25" height="25"  alt=""></a></div>
+      <div class="rounded-circle col-3"><a routerLinkActive="active" [routerLink]="['/kitty/', post.kitty.kittyId]"><img class="rounded-circle" [src]="host + '/kitty/picture/img/' + post.kitty.kittyPicture" width="25" height="25"  alt=""></a></div>
 
       <p class=" text-left col-9 font-weight-bold">{{post.kitty.kittyName}}</p>
 

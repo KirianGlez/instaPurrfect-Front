@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit{
   }
 
   create() {
-    console.log(this.prruwner)
     this.prruwnerService.create(this.prruwner).subscribe(prruwner => {
       this.router.navigate(['/feed']);
       Swal.fire('Nuevo Prruwner', `Bienvenido a InstaPurrfect ${prruwner.prruwnerName} !`, 'success')

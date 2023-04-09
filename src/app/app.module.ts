@@ -17,6 +17,7 @@ import { KittyPageComponent } from './kitty-page/kitty-page.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { LoginComponent } from './login/login.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
+import { RegisterKittyComponent } from './kitty-page/register-kitty/register-kitty.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/prruwner', pathMatch: 'full'},
@@ -25,7 +26,8 @@ const routes: Routes = [
   {path: 'kitty/:id', component: KittyPageComponent},
   {path: 'login', component: LoginComponent},
   {path: 'configuration', component: ConfigurationComponent},
-  {path: 'prruwner/:editar', component: PrruwnerPageComponent}
+  {path: 'prruwner/:editar', component: PrruwnerPageComponent},
+  {path: 'kitty/:editar/:id', component: KittyPageComponent}
 ]
 
 @NgModule({
@@ -39,7 +41,8 @@ const routes: Routes = [
     FeedPostsComponent,
     KittyPageComponent,
     LoginComponent,
-    ConfigurationComponent
+    ConfigurationComponent,
+    RegisterKittyComponent
   ],
   imports: [
     BrowserModule,

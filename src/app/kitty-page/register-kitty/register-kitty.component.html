@@ -1,0 +1,16 @@
+<div class="card-body">
+    <form class="row row justify-content-around px-1 py-1" (ngSubmit)="create()">
+      <input (change)="seleccionarFoto($event)" type="file" class="rounded-circle editar col-3 w-25">
+      <div class="mb-3 mt-5">
+        <input name="kittyName" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Kitty name" [(ngModel)]="kitty.kittyName">
+      </div>
+      <div class="mb-3">
+        <textarea name="kittyDescription" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Kitty description" [(ngModel)]="kitty.kittyDescription"></textarea>
+      </div>
+  </form>
+
+  <button class="btn btn-primary" role="button" (click)="create()">Confirmar</button>
+
+  <button *ngIf="kittyId!=-1" class="btn btn-danger" role="button" (click)="delete()">Eliminar gato :c</button>
+
+</div>
