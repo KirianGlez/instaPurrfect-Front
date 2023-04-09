@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { KittyPost } from '../models/KittyPost';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class KittyService {
-  private urlEndPoint:string = 'http://localhost:8080/kitty'
+  public urlEndPoint:string = environment.host + '/kitty'
 
 constructor(private http: HttpClient) { }
 
