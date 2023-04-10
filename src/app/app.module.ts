@@ -18,6 +18,10 @@ import { AuthModule } from '@auth0/auth0-angular';
 import { LoginComponent } from './login/login.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { RegisterKittyComponent } from './kitty-page/register-kitty/register-kitty.component';
+import { CreatePostComponent } from './create-post/create-post.component';
+import { PictureFormComponent } from './create-post/picture-form/picture-form.component';
+import { FindPageComponent } from './find-page/find-page.component';
+import { FindPagePostsComponent } from './find-page/find-page-posts/find-page-posts.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/prruwner', pathMatch: 'full'},
@@ -27,7 +31,10 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'configuration', component: ConfigurationComponent},
   {path: 'prruwner/:editar', component: PrruwnerPageComponent},
-  {path: 'kitty/:editar/:id', component: KittyPageComponent}
+  {path: 'kitty/:editar/:id', component: KittyPageComponent},
+  {path: 'kittypost/create', component: CreatePostComponent},
+  {path: 'kittypost/create/picture-form/:id', component: PictureFormComponent},
+  {path: 'find', component: FindPageComponent}
 ]
 
 @NgModule({
@@ -42,7 +49,11 @@ const routes: Routes = [
     KittyPageComponent,
     LoginComponent,
     ConfigurationComponent,
-    RegisterKittyComponent
+    RegisterKittyComponent,
+    CreatePostComponent,
+    PictureFormComponent,
+    FindPageComponent,
+    FindPagePostsComponent
   ],
   imports: [
     BrowserModule,

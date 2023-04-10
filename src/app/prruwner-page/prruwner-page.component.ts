@@ -60,6 +60,7 @@ export class PrruwnerPageComponent implements OnInit{
   }
 
   seleccionarFoto(event) {
+
     this.fotoSeleccionada = event.target.files[0];
   }
 

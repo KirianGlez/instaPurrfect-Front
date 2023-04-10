@@ -1,0 +1,12 @@
+<div>
+  <input type="email" class="form-control" placeholder="buscar..." [(ngModel)]="inputValue" (input)="onInput()" >
+</div>
+
+<div *ngIf="buscando" class="bg-light p-3">
+  <div *ngFor="let kitty of this.kitties">
+    <div class="rounded-circle"><a class="link" routerLinkActive="active" [routerLink]="['/kitty/', kitty.kittyId]"><p class="text-left font-weight-bold w-100"><img class="rounded-circle" [src]="host + '/kitty/picture/img/' + kitty.kittyPicture" width="25" height="25"  alt=""> {{kitty.kittyName}}</p></a></div>
+
+  </div>
+</div>
+
+<div class="posts"><div class="d-flex flex-wrap justify-content-start"><div class="m-0 p-0 col-4 post" *ngFor="let post of this.kittyPosts"><app-find-page-posts [post]="post"></app-find-page-posts></div></div>

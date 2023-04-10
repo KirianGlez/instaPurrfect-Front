@@ -1,0 +1,21 @@
+<div class="card m-3">
+  <div>
+    <label for="archivo" class="label"><img src="https://icons.getbootstrap.com/assets/icons/pencil.svg" height="5em" *ngIf="!imageSrc"><img [src]="imageSrc" height="5em" *ngIf="imageSrc"></label>
+    <input class="hidden" id="archivo" type="file" name="archivo" (change)="seleccionarFoto($event)">
+  </div>
+  <div class="card-body">
+    <div class="row justify-content-start px-1 mb-2 mt-4">
+      <div class="rounded-circle col-2 d-flex justify-content-start"><img class="rounded-circle " [src]="host + '/kitty/picture/img/' + kitty.kittyPicture" width="40" height="40"  alt=""></div>
+      <div class="col-8 p-0 pt-1">
+        <p class="text-left col-10 font-weight-bold p-0 m-0 h5">{{kitty.kittyName}}</p>
+        <div class="d-flex justify-content-between">
+          <div class="col-6 font-weight-light p-0 m-0 h6 text-left user">@{{prruwner.prruwnerName}}</div>
+        </div>
+      </div>
+      <div class="form-group mt-4">
+        <textarea  [(ngModel)]="kittyPost.furrscription" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Descripción..."></textarea>
+    </div>
+    <button class="btn btn-primary mt-4" (click)="create()">Publicar</button>
+  </div>
+  </div>
+</div>

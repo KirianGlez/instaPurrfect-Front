@@ -1,0 +1,10 @@
+.posts{
+  height: 750px;
+  overflow-y: scroll;
+}
+
+.link{
+  text-decoration: none;
+  color: black;
+  font-weight: bold !important;
+}

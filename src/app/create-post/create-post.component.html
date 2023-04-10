@@ -1,0 +1,10 @@
+<h1 class="text-center p-5">¿Con quién?</h1>
+<div class="row wrap justify-content-center p-4">
+
+  <div class="col-6" *ngFor="let kitty of this.prruwner.kitties">
+    <a class="link" routerLinkActive="active" [routerLink]="['/kittypost/create/picture-form/', kitty.kittyId]">
+      <img class="rounded-circle" [src]="host + '/kitty/picture/img/' + this.kitty.kittyPicture" width="140" height="140" alt="">
+      <h5 class="kitty-name py-3 text-center">{{kitty.kittyName}}</h5>
+    </a>
+  </div>
+</div>

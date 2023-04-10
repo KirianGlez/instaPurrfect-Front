@@ -40,4 +40,8 @@ constructor(private http: HttpClient) { }
     this.http.delete(`${this.urlEndPoint}/${id}`);
   }
 
+  findByNameCoincidnce(parameter: string): Observable<Kitty[]> {
+    return this.http.get<Kitty[]>(`${this.urlEndPoint}/findbycoincidence/${parameter}`)
+  }
+
 }
