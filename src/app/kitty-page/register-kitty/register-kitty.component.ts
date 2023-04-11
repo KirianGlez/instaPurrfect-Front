@@ -76,7 +76,9 @@ export class RegisterKittyComponent implements OnInit{
 
   delete() {
     console.log(this.kittyId);
-    this.kittyService.deleteKitty(this.kittyId);
+    this.kittyService.deleteKitty(this.kittyId).subscribe(
+      recibido => console.log(recibido)
+    )
   }
 
 }

@@ -67,9 +67,11 @@ export class PictureFormComponent implements OnInit{
   }
 
   subirFoto() {
-    this.kittyPostService.putPicture(this.fotoSeleccionada, this.prruwner.prruwnerOauthId).subscribe(
+    this.kittyPostService.putPicture(this.fotoSeleccionada, this.kittyPost.kittyPostId.toString()).subscribe(
       kittyPost => {
+        console.log(kittyPost);
         this.kittyPost = kittyPost;
+        this.router.navigate(['/prruwner']);
       }
     )
   }
@@ -79,7 +81,7 @@ export class PictureFormComponent implements OnInit{
     this.kittyPost.prruwner = this.prruwner;
     console.log(this.kittyPost)
     this.kittyPostService.create(this.kittyPost).subscribe(kittyPost => {
-      this.router.navigate(['/prruwner']);
+      this.kittyPost = kittyPost
       Swal.fire('Nuevo Post', `Has publicado un nuevo kittyPost, gracias!`, 'success')
       this.subirFoto();
     })

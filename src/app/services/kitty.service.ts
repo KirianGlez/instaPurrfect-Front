@@ -36,8 +36,8 @@ constructor(private http: HttpClient) { }
     )
   }
 
-  deleteKitty(id: number) {
-    this.http.delete(`${this.urlEndPoint}/${id}`);
+  deleteKitty(id: number): Observable<String> {
+    return this.http.delete<String>(`${this.urlEndPoint}/${id}`);
   }
 
   findByNameCoincidnce(parameter: string): Observable<Kitty[]> {
