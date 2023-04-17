@@ -10,6 +10,7 @@ import { PrruwnerService } from 'src/app/services/prruwner.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { ImagesService } from 'src/app/services/images.service';
+import {v4 as uuidv4} from 'uuid';
 
 @Component({
   selector: 'app-picture-form',
@@ -24,7 +25,6 @@ export class PictureFormComponent implements OnInit{
   private fotoSeleccionada: File;
   imageSrc: string;
   kittyPost: KittyPost = new KittyPost();
-  sas = "sp=racwdl&st=2023-04-17T11:33:24Z&se=2023-04-19T19:33:24Z&spr=https&sv=2021-12-02&sr=c&sig=8BoBFyF0WmaDXEsHNjayU5N2ZXGttYMy7xvjP9KGEJY%3D";
 
   constructor(private imagesService:ImagesService,private kittyPostService:KittyPostService,private prruwnerService:PrruwnerService, private kittyService:KittyService, public auth: AuthService, private router: Router, private route: ActivatedRoute){
   }
@@ -51,7 +51,6 @@ export class PictureFormComponent implements OnInit{
             }
           )
         })
-
       }
     })
   }
@@ -68,12 +67,11 @@ export class PictureFormComponent implements OnInit{
   }
 
   subirFoto() {
-
-    this.imagesService.uploadImage(this.sas, this.fotoSeleccionada, this.fotoSeleccionada.name, () => {
-      console.log("hola");
+    this.imagesService.uploadImage(this.fotoSeleccionada, this.fotoSeleccionada.name, () => {
+      this.kittyPost.pawscture = this.imagesService.url + this.fotoSeleccionada.name;
     })
 
-    this.kittyPostService.putPicture(this.fotoSeleccionada, this.kittyPost.kittyPostId.toString()).subscribe(
+    /*this.kittyPostService.putPicture(this.fotoSeleccionada, this.kittyPost.kittyPostId.toString()).subscribe(
       kittyPost => {
         this.kittyPost = kittyPost;
         this.router.navigate(['/prruwner']);
@@ -82,13 +80,13 @@ export class PictureFormComponent implements OnInit{
         Swal.fire('Error', 'No se pudo subir la foto', 'error')
         this.router.navigate([`/feed`])
       }
-    )
+    )*/
   }
 
   create(){
     this.kittyPost.kitty = this.kitty;
     this.kittyPost.prruwner = this.prruwner;
-    console.log(this.kittyPost)
+    this.kittyPost.pawscture = this.imagesService.url + this.fotoSeleccionada.name;
     this.kittyPostService.create(this.kittyPost).subscribe(kittyPost => {
       this.kittyPost = kittyPost
       Swal.fire('Nuevo Post', `Has publicado un nuevo kittyPost, gracias!`, 'success')

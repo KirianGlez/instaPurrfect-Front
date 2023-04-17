@@ -1,5 +1,5 @@
 .posts{
-  height: 700px;
+  margin-bottom:100px !important;
   overflow-y: scroll;
 }
 ::-webkit-scrollbar {display: none;}

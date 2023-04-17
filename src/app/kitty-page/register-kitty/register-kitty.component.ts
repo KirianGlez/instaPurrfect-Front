@@ -7,6 +7,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { PrruwnerService } from 'src/app/services/prruwner.service';
 import { Prruwner } from 'src/app/models/Prruwner';
 import { Router } from '@angular/router';
+import { ImagesService } from 'src/app/services/images.service';
 
 @Component({
   selector: 'app-register-kitty',
@@ -21,7 +22,7 @@ export class RegisterKittyComponent implements OnInit{
   @Input() kittyId: number;
   imageSrc: string;
 
-  constructor(private kittyService: KittyService,public auth: AuthService,private prruwnerService:PrruwnerService,private router: Router) {
+  constructor(private imagesService: ImagesService, private kittyService: KittyService,public auth: AuthService,private prruwnerService:PrruwnerService,private router: Router) {
 
   }
 
@@ -63,7 +64,10 @@ export class RegisterKittyComponent implements OnInit{
   }
 
   subirFoto() {
-    if(this.fotoSeleccionada!=null){
+    this.imagesService.uploadImage(this.fotoSeleccionada, this.fotoSeleccionada.name, () => {
+      kitty => {this.kitty = kitty; this.router.navigate([`/kitty/` + this.kitty.kittyId]);}
+    })
+    /*if(this.fotoSeleccionada!=null){
       this.kittyService.putPicture(this.fotoSeleccionada, this.kitty.kittyId.toString()).subscribe(
         kitty => {
           this.kitty = kitty;
@@ -76,12 +80,13 @@ export class RegisterKittyComponent implements OnInit{
       )
     }else{
       this.router.navigate([`/kitty/` + this.kitty.kittyId])
-    }
+    }*/
     
   }
 
   create() {
     this.kitty.prruwnerId = this.prruwner.prruwnerId;
+    this.kitty.kittyPicture = this.fotoSeleccionada.name;
     this.kittyService.create(this.kitty).subscribe(kitty => {
       this.kitty = kitty
       this.subirFoto();
