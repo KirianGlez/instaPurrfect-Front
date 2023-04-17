@@ -65,12 +65,21 @@ export class PrruwnerPageComponent implements OnInit{
   }
 
   subirFoto() {
-    this.prruwnerService.putPicture(this.fotoSeleccionada, this.prruwner.prruwnerOauthId).subscribe(
-      prruwner => {
-        this.prruwner = prruwner;
-        Swal.fire('La foto se ha cambiado correctamente!' , 'La foto se ha cambiado correctamente!', 'success')
-      }
-    )
+    if(this.fotoSeleccionada!=null){
+      this.prruwnerService.putPicture(this.fotoSeleccionada, this.prruwner.prruwnerOauthId).subscribe(
+        prruwner => {
+          this.prruwner = prruwner;
+          this.router.navigate([`/prruwner`]);
+        },
+        error => {
+          Swal.fire('Error', 'No se pudo subir la foto', 'error')
+          this.router.navigate([`/feed`])
+        }
+      )
+    }else{
+      this.router.navigate([`/prruwner`]);
+    }
+    
   }
 
 }

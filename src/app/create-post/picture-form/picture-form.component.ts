@@ -56,7 +56,6 @@ export class PictureFormComponent implements OnInit{
 
   seleccionarFoto(event){
     this.fotoSeleccionada = event.target.files[0];
-    console.log(this.fotoSeleccionada)
     const reader = new FileReader();
 
     reader.onload = (event: any) => {
@@ -69,9 +68,12 @@ export class PictureFormComponent implements OnInit{
   subirFoto() {
     this.kittyPostService.putPicture(this.fotoSeleccionada, this.kittyPost.kittyPostId.toString()).subscribe(
       kittyPost => {
-        console.log(kittyPost);
         this.kittyPost = kittyPost;
         this.router.navigate(['/prruwner']);
+      },
+      error => {
+        Swal.fire('Error', 'No se pudo subir la foto', 'error')
+        this.router.navigate([`/feed`])
       }
     )
   }

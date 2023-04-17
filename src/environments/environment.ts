@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  host: 'https://instapurrfect-prueba2.azurewebsites.net'
+  host: 'http://localhost:8080'
 };
