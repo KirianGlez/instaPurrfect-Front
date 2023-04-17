@@ -6,3 +6,12 @@ a {
 .row{
   margin-top:5em;
 }
+
+@media screen and (orientation: landscape) {
+  /* Aplica estilos solo cuando la pantalla está en modo horizontal */
+  .row { /* Establece el ancho máximo del div a 500px */
+    max-width:500px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+}

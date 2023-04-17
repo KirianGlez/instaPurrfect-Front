@@ -2,7 +2,7 @@
   <div class="card-body">
     <div class="row row justify-content-around px-1 py-1">
       <div class="rounded-circle col-3 ">
-          <img class="rounded-circle" [src]="host + '/prruwner/picture/img/' + this.prruwner.prruwnerPicture" width="60" height="60"  alt="">
+          <img class="rounded-circle" [src]="this.prruwner.prruwnerPicture" width="60" height="60"  alt="">
           <input (change)="seleccionarFoto($event)" *ngIf="this.editar" type="file" class="editar">
       </div>
 
@@ -16,7 +16,7 @@
     <div class="row bg-transparent flex-nowrap kitties">
       <div class="col-4" *ngFor="let kitty of this.prruwner.kitties">
         <a class="link" routerLinkActive="active" [routerLink]="['/kitty/', kitty.kittyId]">
-            <img class="rounded-circle" [src]="host + '/kitty/picture/img/' + this.kitty.kittyPicture" width="90" height="90" alt="">
+            <img class="rounded-circle" [src]="this.kitty.kittyPicture" width="90" height="90" alt="">
           <input *ngIf="this.editar"  type="file" class="editar" routerLinkActive="active" [routerLink]="['/kitty/', true, kitty.kittyId]">
           <h5 class="kitty-name py-1">{{kitty.kittyName}}</h5>
         </a>

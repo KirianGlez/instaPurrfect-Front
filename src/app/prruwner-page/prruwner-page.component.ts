@@ -6,6 +6,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
+import { ImagesService } from '../services/images.service';
 
 @Component({
   selector: 'app-prruwner-page',
@@ -20,7 +21,7 @@ export class PrruwnerPageComponent implements OnInit{
   private fotoSeleccionada: File;
   host: string;
 
-  constructor(private prruwnerService:PrruwnerService, public auth: AuthService, private router: Router, private route: ActivatedRoute){
+  constructor(private imagesService: ImagesService, private prruwnerService:PrruwnerService, public auth: AuthService, private router: Router, private route: ActivatedRoute){
   }
 
   ngOnInit() {
@@ -54,7 +55,7 @@ export class PrruwnerPageComponent implements OnInit{
         prruwner => this.prruwner = prruwner
       )
       this.prruwnerService.getPrruwnerKittyPosts(this.kittyId).subscribe(
-        kittyPost => {this.kittyPosts = kittyPost;console.log(this.kittyPosts)}
+        kittyPost => {this.kittyPosts = kittyPost;}
       )
     }
   }
@@ -65,7 +66,14 @@ export class PrruwnerPageComponent implements OnInit{
   }
 
   subirFoto() {
-    if(this.fotoSeleccionada!=null){
+    this.imagesService.uploadImage(this.fotoSeleccionada, this.fotoSeleccionada.name, () => {
+      this.prruwner.prruwnerPicture = this.imagesService.url + this.fotoSeleccionada.name;
+      this.prruwnerService.create(this.prruwner).subscribe(
+        prruwner => {this.prruwner = prruwner; this.router.navigate([`/prruwner`]);}
+      )
+    })
+
+    /*if(this.fotoSeleccionada!=null){
       this.prruwnerService.putPicture(this.fotoSeleccionada, this.prruwner.prruwnerOauthId).subscribe(
         prruwner => {
           this.prruwner = prruwner;
@@ -78,7 +86,7 @@ export class PrruwnerPageComponent implements OnInit{
       )
     }else{
       this.router.navigate([`/prruwner`]);
-    }
+    }*/
     
   }
 
