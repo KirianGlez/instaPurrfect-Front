@@ -9,6 +9,7 @@ import { KittyPostService } from 'src/app/services/kittyPost.service';
 import { PrruwnerService } from 'src/app/services/prruwner.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { ImagesService } from 'src/app/services/images.service';
 
 @Component({
   selector: 'app-picture-form',
@@ -24,7 +25,7 @@ export class PictureFormComponent implements OnInit{
   imageSrc: string;
   kittyPost: KittyPost = new KittyPost();
 
-  constructor(private kittyPostService:KittyPostService,private prruwnerService:PrruwnerService, private kittyService:KittyService, public auth: AuthService, private router: Router, private route: ActivatedRoute){
+  constructor(private imagesService:ImagesService,private kittyPostService:KittyPostService,private prruwnerService:PrruwnerService, private kittyService:KittyService, public auth: AuthService, private router: Router, private route: ActivatedRoute){
   }
 
   ngOnInit(): void {
@@ -66,6 +67,7 @@ export class PictureFormComponent implements OnInit{
   }
 
   subirFoto() {
+
     this.kittyPostService.putPicture(this.fotoSeleccionada, this.kittyPost.kittyPostId.toString()).subscribe(
       kittyPost => {
         this.kittyPost = kittyPost;
@@ -76,6 +78,13 @@ export class PictureFormComponent implements OnInit{
         this.router.navigate([`/feed`])
       }
     )
+  }
+
+  async handleImageUpload(fotoSeleccionada: File) {
+
+    const imageUrl = await this.imagesService.uploadImageToBlobStorage(fotoSeleccionada, fotoSeleccionada.name);
+
+    console.log(imageUrl);
   }
 
   create(){
