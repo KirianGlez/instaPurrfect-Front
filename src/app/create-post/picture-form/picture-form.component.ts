@@ -24,6 +24,7 @@ export class PictureFormComponent implements OnInit{
   private fotoSeleccionada: File;
   imageSrc: string;
   kittyPost: KittyPost = new KittyPost();
+  sas = "sp=racwdl&st=2023-04-17T11:33:24Z&se=2023-04-19T19:33:24Z&spr=https&sv=2021-12-02&sr=c&sig=8BoBFyF0WmaDXEsHNjayU5N2ZXGttYMy7xvjP9KGEJY%3D";
 
   constructor(private imagesService:ImagesService,private kittyPostService:KittyPostService,private prruwnerService:PrruwnerService, private kittyService:KittyService, public auth: AuthService, private router: Router, private route: ActivatedRoute){
   }
@@ -68,6 +69,10 @@ export class PictureFormComponent implements OnInit{
 
   subirFoto() {
 
+    this.imagesService.uploadImage(this.sas, this.fotoSeleccionada, this.fotoSeleccionada.name, () => {
+      console.log("hola");
+    })
+
     this.kittyPostService.putPicture(this.fotoSeleccionada, this.kittyPost.kittyPostId.toString()).subscribe(
       kittyPost => {
         this.kittyPost = kittyPost;
@@ -78,13 +83,6 @@ export class PictureFormComponent implements OnInit{
         this.router.navigate([`/feed`])
       }
     )
-  }
-
-  async handleImageUpload(fotoSeleccionada: File) {
-
-    const imageUrl = await this.imagesService.uploadImageToBlobStorage(fotoSeleccionada, fotoSeleccionada.name);
-
-    console.log(imageUrl);
   }
 
   create(){

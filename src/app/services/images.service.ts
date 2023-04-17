@@ -1,26 +1,35 @@
 import { Injectable } from '@angular/core';
-import { BlobServiceClient } from '@azure/storage-blob';
+import { ContainerClient, BlobServiceClient } from '@azure/storage-blob';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImagesService {
 
-  connectionString = "DefaultEndpointsProtocol=https;AccountName=instapurrfectstorage;AccountKey=bam1b6OrVdK+ZztnvTTDdZOGnM4xmpRMITsIFPUkD1B1hactGP14wI989ov1Fr7IA0dOue23lcX7+AStI1J1jA==;EndpointSuffix=core.windows.net"
+  accountName = "instapurrfectstorage";
+  containerName = "pictures";
 
-  blobServiceClient = BlobServiceClient.fromConnectionString(this.connectionString);
+  private containerClient(sas?: string): ContainerClient {
+    let token = "sp=racwdl&st=2023-04-17T11:33:24Z&se=2023-04-19T19:33:24Z&spr=https&sv=2021-12-02&sr=c&sig=8BoBFyF0WmaDXEsHNjayU5N2ZXGttYMy7xvjP9KGEJY%3D"
+    if (sas) {
+      token = sas;
+    }
 
-  async uploadImageToBlobStorage(file: File, filename: string): Promise<string> {
+    return new BlobServiceClient(`https://${this.accountName}.blob.core.windows.net?${token}`)
+    .getContainerClient(this.containerName);
+  }
 
-    const containerName = "pictures";
+  public deleteImage(sas: string, name: string, handler: () => void) {
+    this.containerClient(sas).deleteBlob(name).then(() => {
+      handler()
+    })
+  }
 
-    const containerClient = this.blobServiceClient.getContainerClient(containerName);
-
-    const blobClient = containerClient.getBlockBlobClient(filename);
-
-    await blobClient.uploadData(file, { blobHTTPHeaders: {blobContentType: file.type}});
-
-    return blobClient.url;
+  public uploadImage(sas: string, content: Blob, name: string, handler: () => void) {
+    const blockBlobClient = this.containerClient(sas).getBlockBlobClient(name);
+    blockBlobClient
+    .uploadData(content, { blobHTTPHeaders: { blobContentType: content.type}})
+    .then(() => handler())
   }
 
 }
