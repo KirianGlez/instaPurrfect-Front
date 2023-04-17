@@ -1,0 +1,33 @@
+.card {
+  text-align: center;
+  border-radius: 1em;
+}
+
+.card-body {
+  padding:0em;
+}
+
+p{
+  text-align: left !important;
+  font-weight: 500 !important;
+}
+
+.picture{
+  height:115px;
+}
+
+.picture img{
+  width:100% !important;
+  height:100% !important;
+}
+
+.social-buttons div{
+  height:27px;
+  border-radius:1em;
+  font-size:smaller !important;
+  padding:0;
+}
+
+.like{
+  background-color: #EAEEF1
+}

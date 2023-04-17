@@ -1,9 +1,11 @@
+import { Router } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
 import { Component } from '@angular/core';
 import { KittyPost } from '../models/KittyPost';
 import { Prruwner } from '../models/Prruwner';
 import { PrruwnerService } from '../services/prruwner.service';
-import { CookieService } from 'ngx-cookie-service';
 import { PurrfeedService } from '../services/purrfeed.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-feed-page',
@@ -13,17 +15,34 @@ import { PurrfeedService } from '../services/purrfeed.service';
 export class FeedPageComponent {
   prruwner: Prruwner = new Prruwner();
   kittyPosts: KittyPost[] = [];
+  host: string;
 
-  constructor(private prruwnerService:PrruwnerService,private purrfeedService:PurrfeedService, private CookieService: CookieService){
-    this.CookieService.set('user', '1');
+  constructor(private prruwnerService:PrruwnerService,private purrfeedService:PurrfeedService, public auth: AuthService, public router: Router){
+
   }
 
   ngOnInit() {
-    this.prruwnerService.getPrruwner(Number(this.CookieService.get('user'))).subscribe(
-      prruwner => this.prruwner = prruwner
-    )
-    this.purrfeedService.getPrruwnerKittyPostsByPurryFriends(Number(this.CookieService.get('user'))).subscribe(
-      kittyPost => {this.kittyPosts = kittyPost;console.log(this.kittyPosts)}
-    )
+    this.host = environment.host;
+    this.auth.isAuthenticated$.subscribe( auth => {
+      if(!auth){
+        this.auth.loginWithRedirect();
+      }else{
+        this.auth.user$.subscribe( user => {
+          this.prruwnerService.getPrruwnerByOauthId(user?.sub!).subscribe(
+            (prruwner) => {
+              this.prruwner = prruwner;
+              this.purrfeedService.getPrruwnerKittyPostsByPurryFriends(prruwner.prruwnerId).subscribe(
+                kittyPost => {this.kittyPosts = kittyPost;}
+              )
+            },
+            (error) => {
+              this.router.navigate([`/login`]);
+            }
+          )
+        })
+
+      }
+    })
   }
+
 }

@@ -62,3 +62,34 @@ h4{
   max-width:250px;
   margin: 0 auto !important;
 }
+
+.editar {
+  background-image: url(https://icons.getbootstrap.com/assets/icons/pencil.svg);
+  opacity: 0.5;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: none;
+  width:1em;
+  height:1em;
+  margin:0.2em;
+}
+
+.editar::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.plus{
+  background-image : url(https://icons.getbootstrap.com/assets/icons/plus-lg.svg);
+  opacity: 0.5;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: none;
+  width: 5em;
+  height:5em;
+  margin:0.2em;
+}
+
+.link{
+  text-decoration: none;
+  color: black;
+}
