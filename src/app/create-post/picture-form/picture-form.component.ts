@@ -9,6 +9,8 @@ import { KittyPostService } from 'src/app/services/kittyPost.service';
 import { PrruwnerService } from 'src/app/services/prruwner.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { ImagesService } from 'src/app/services/images.service';
+import {v4 as uuidv4} from 'uuid';
 
 @Component({
   selector: 'app-picture-form',
@@ -24,7 +26,7 @@ export class PictureFormComponent implements OnInit{
   imageSrc: string;
   kittyPost: KittyPost = new KittyPost();
 
-  constructor(private kittyPostService:KittyPostService,private prruwnerService:PrruwnerService, private kittyService:KittyService, public auth: AuthService, private router: Router, private route: ActivatedRoute){
+  constructor(private imagesService:ImagesService,private kittyPostService:KittyPostService,private prruwnerService:PrruwnerService, private kittyService:KittyService, public auth: AuthService, private router: Router, private route: ActivatedRoute){
   }
 
   ngOnInit(): void {
@@ -49,14 +51,12 @@ export class PictureFormComponent implements OnInit{
             }
           )
         })
-
       }
     })
   }
 
   seleccionarFoto(event){
     this.fotoSeleccionada = event.target.files[0];
-    console.log(this.fotoSeleccionada)
     const reader = new FileReader();
 
     reader.onload = (event: any) => {
@@ -67,19 +67,26 @@ export class PictureFormComponent implements OnInit{
   }
 
   subirFoto() {
-    this.kittyPostService.putPicture(this.fotoSeleccionada, this.kittyPost.kittyPostId.toString()).subscribe(
+    this.imagesService.uploadImage(this.fotoSeleccionada, this.fotoSeleccionada.name, () => {
+      this.kittyPost.pawscture = this.imagesService.url + this.fotoSeleccionada.name;
+    })
+
+    /*this.kittyPostService.putPicture(this.fotoSeleccionada, this.kittyPost.kittyPostId.toString()).subscribe(
       kittyPost => {
-        console.log(kittyPost);
         this.kittyPost = kittyPost;
         this.router.navigate(['/prruwner']);
+      },
+      error => {
+        Swal.fire('Error', 'No se pudo subir la foto', 'error')
+        this.router.navigate([`/feed`])
       }
-    )
+    )*/
   }
 
   create(){
     this.kittyPost.kitty = this.kitty;
     this.kittyPost.prruwner = this.prruwner;
-    console.log(this.kittyPost)
+    this.kittyPost.pawscture = this.imagesService.url + this.fotoSeleccionada.name;
     this.kittyPostService.create(this.kittyPost).subscribe(kittyPost => {
       this.kittyPost = kittyPost
       Swal.fire('Nuevo Post', `Has publicado un nuevo kittyPost, gracias!`, 'success')

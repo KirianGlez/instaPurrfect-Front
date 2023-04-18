@@ -2,9 +2,9 @@
   <input type="email" class="form-control" placeholder="buscar..." [(ngModel)]="inputValue" (input)="onInput()" >
 </div>
 
-<div *ngIf="buscando" class="bg-light p-3">
+<div *ngIf="buscando" class="bg-light p-3 .full-height">
   <div *ngFor="let kitty of this.kitties">
-    <div class="rounded-circle"><a class="link" routerLinkActive="active" [routerLink]="['/kitty/', kitty.kittyId]"><p class="text-left font-weight-bold w-100"><img class="rounded-circle" [src]="host + '/kitty/picture/img/' + kitty.kittyPicture" width="25" height="25"  alt=""> {{kitty.kittyName}}</p></a></div>
+    <div class="rounded-circle"><a class="link" routerLinkActive="active" [routerLink]="['/kitty/', kitty.kittyId]"><p class="text-left font-weight-bold w-100"><img class="rounded-circle" [src]="kitty.kittyPicture" width="25" height="25"  alt=""> {{kitty.kittyName}}</p></a></div>
 
   </div>
 </div>

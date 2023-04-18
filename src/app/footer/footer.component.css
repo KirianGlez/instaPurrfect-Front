@@ -1,6 +1,6 @@
 .footer {
-  position: absolute;
-  bottom: 0px;
+  position: fixed;
+  bottom: 0;
   width:100%;
   border-top-left-radius: 2.5em;
   border-top-right-radius: 2.5em;
@@ -11,5 +11,3 @@
   margin-left: 0;
   --bs-gutter-x: 0;
 }
-
-

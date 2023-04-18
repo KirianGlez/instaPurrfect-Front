@@ -7,6 +7,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { PrruwnerService } from 'src/app/services/prruwner.service';
 import { Prruwner } from 'src/app/models/Prruwner';
 import { Router } from '@angular/router';
+import { ImagesService } from 'src/app/services/images.service';
 
 @Component({
   selector: 'app-register-kitty',
@@ -19,8 +20,9 @@ export class RegisterKittyComponent implements OnInit{
   kitty: Kitty = new Kitty();
   prruwner: Prruwner = new Prruwner();
   @Input() kittyId: number;
+  imageSrc: string;
 
-  constructor(private kittyService: KittyService,public auth: AuthService,private prruwnerService:PrruwnerService,private router: Router) {
+  constructor(private imagesService: ImagesService, private kittyService: KittyService,public auth: AuthService,private prruwnerService:PrruwnerService,private router: Router) {
 
   }
 
@@ -52,32 +54,52 @@ export class RegisterKittyComponent implements OnInit{
 
   seleccionarFoto(event) {
     this.fotoSeleccionada = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (event: any) => {
+      this.imageSrc = event.target.result;
+    }
+
+    reader.readAsDataURL(event.target.files[0]);
   }
 
   subirFoto() {
-    this.kittyService.putPicture(this.fotoSeleccionada, this.kitty.kittyId.toString()).subscribe(
-      kitty => {
-        this.kitty = kitty;
-        Swal.fire('La foto se ha cambiado correctamente!' , 'La foto se ha cambiado correctamente!', 'success')
-      }
-    )
+    this.imagesService.uploadImage(this.fotoSeleccionada, this.fotoSeleccionada.name, () => {
+      kitty => {this.kitty = kitty; this.router.navigate([`/kitty/` + this.kitty.kittyId]);}
+    })
+    /*if(this.fotoSeleccionada!=null){
+      this.kittyService.putPicture(this.fotoSeleccionada, this.kitty.kittyId.toString()).subscribe(
+        kitty => {
+          this.kitty = kitty;
+          this.router.navigate([`/kitty/` + this.kitty.kittyId]);
+        },
+        error => {
+          Swal.fire('Error', 'No se pudo subir la imagen', 'error')
+          this.router.navigate([`/feed`])
+        }
+      )
+    }else{
+      this.router.navigate([`/kitty/` + this.kitty.kittyId])
+    }*/
+    
   }
 
   create() {
     this.kitty.prruwnerId = this.prruwner.prruwnerId;
-    console.log(this.kitty);
-    console.log(this.fotoSeleccionada);
+    this.kitty.kittyPicture = this.fotoSeleccionada.name;
     this.kittyService.create(this.kitty).subscribe(kitty => {
       this.kitty = kitty
-      Swal.fire('Nuevo Kitty', `Bienvenido a InstaPurrfect ${kitty.kittyName} !`, 'success')
       this.subirFoto();
     });
   }
 
   delete() {
-    console.log(this.kittyId);
     this.kittyService.deleteKitty(this.kittyId).subscribe(
-      recibido => console.log(recibido)
+      recibido => this.router.navigate([`/feed`]),
+      error => {
+        Swal.fire('Error', 'No se pudo eliminar', 'error')
+        this.router.navigate([`/feed`])
+      }
     )
   }
 
