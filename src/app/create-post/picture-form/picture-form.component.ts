@@ -67,9 +67,17 @@ export class PictureFormComponent implements OnInit{
   }
 
   subirFoto() {
-    this.imagesService.uploadImage(this.fotoSeleccionada, this.fotoSeleccionada.name, () => {
+    /*this.imagesService.uploadImage(this.fotoSeleccionada, this.fotoSeleccionada.name, () => {
       this.kittyPost.pawscture = this.imagesService.url + this.fotoSeleccionada.name;
-    })
+    })*/
+    console.log(this.fotoSeleccionada.name)
+    this.imagesService.uploadImage(this.fotoSeleccionada, this.fotoSeleccionada.name).subscribe(
+      image => {this.kittyPost.pawscture = image; this.create()} , 
+      error => {
+        Swal.fire('Error', error, 'error')
+        this.router.navigate([`/feed`])
+      }
+    );
 
     /*this.kittyPostService.putPicture(this.fotoSeleccionada, this.kittyPost.kittyPostId.toString()).subscribe(
       kittyPost => {
@@ -86,11 +94,10 @@ export class PictureFormComponent implements OnInit{
   create(){
     this.kittyPost.kitty = this.kitty;
     this.kittyPost.prruwner = this.prruwner;
-    this.kittyPost.pawscture = this.imagesService.url + this.fotoSeleccionada.name;
     this.kittyPostService.create(this.kittyPost).subscribe(kittyPost => {
       this.kittyPost = kittyPost
       Swal.fire('Nuevo Post', `Has publicado un nuevo kittyPost, gracias!`, 'success')
-      this.subirFoto();
+      this.router.navigate([`/feed`])
     })
   }
 

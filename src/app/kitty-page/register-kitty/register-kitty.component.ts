@@ -64,32 +64,20 @@ export class RegisterKittyComponent implements OnInit{
   }
 
   subirFoto() {
-    this.imagesService.uploadImage(this.fotoSeleccionada, this.fotoSeleccionada.name, () => {
-      kitty => {this.kitty = kitty; this.router.navigate([`/kitty/` + this.kitty.kittyId]);}
-    })
-    /*if(this.fotoSeleccionada!=null){
-      this.kittyService.putPicture(this.fotoSeleccionada, this.kitty.kittyId.toString()).subscribe(
-        kitty => {
-          this.kitty = kitty;
-          this.router.navigate([`/kitty/` + this.kitty.kittyId]);
-        },
-        error => {
-          Swal.fire('Error', 'No se pudo subir la imagen', 'error')
-          this.router.navigate([`/feed`])
-        }
-      )
-    }else{
-      this.router.navigate([`/kitty/` + this.kitty.kittyId])
-    }*/
-    
+    this.imagesService.uploadImage(this.fotoSeleccionada, this.fotoSeleccionada.name).subscribe(
+      image => {this.kitty.kittyPicture = image; this.create() } , 
+      error => {
+        Swal.fire('Error', error, 'error')
+        this.router.navigate([`/feed`])
+      }
+    );
   }
 
   create() {
     this.kitty.prruwnerId = this.prruwner.prruwnerId;
-    this.kitty.kittyPicture = this.fotoSeleccionada.name;
     this.kittyService.create(this.kitty).subscribe(kitty => {
       this.kitty = kitty
-      this.subirFoto();
+      this.router.navigate([`/kitty/` + this.kitty.kittyId]);
     });
   }
 
