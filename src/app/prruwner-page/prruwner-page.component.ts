@@ -67,13 +67,21 @@ export class PrruwnerPageComponent implements OnInit{
 
   subirFoto() {
     this.imagesService.uploadImage(this.fotoSeleccionada, this.fotoSeleccionada.name).subscribe(
-      image => {this.prruwner.prruwnerPicture = this.fotoSeleccionada.name; this.router.navigate([`/prruwner`]);} , 
+      image => {
+        this.prruwner.prruwnerPicture = image;
+        this.prruwnerService.create(this.prruwner).subscribe(
+          prruwner => {
+            this.prruwner = prruwner;
+            this.router.navigate([`/prruwner`]);
+          }
+        )
+        } ,
       error => {
         Swal.fire('Error', error, 'error')
         this.router.navigate([`/feed`])
       }
     );
-    
+
   }
 
 }

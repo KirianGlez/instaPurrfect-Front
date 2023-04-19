@@ -1,7 +1,7 @@
 <div class="card border-white">
   <div class="card-body" *ngIf="!this.editar">
     <div class="row row justify-content-around px-1 py-1">
-      <div class="rounded-circle col-3 "><img class="rounded-circle" [src]="host + '/kitty/picture/img/' + this.kitty.kittyPicture" width="60" height="60"  alt=""></div>
+      <div class="rounded-circle col-3 "><img class="rounded-circle" [src]="this.kitty.kittyPicture" width="60" height="60"  alt=""></div>
 
       <h4 class="col-6 mt-3 mx-0 p-0">{{this.kitty.kittyName}}</h4>
       <div class="col-3 mt-1 d-flex justify-content-end pr-0"><svg class="" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="gray" class="bi bi-gear" viewBox="0 0 16 16">

@@ -1,6 +1,6 @@
 <div class="card m-3">
   <div>
-    <label for="archivo" class="label"><img src="https://icons.getbootstrap.com/assets/icons/pencil.svg" height="5em" *ngIf="!imageSrc"><img [src]="imageSrc" height="5em" *ngIf="imageSrc"></label>
+    <label for="archivo" class="label">Seleccionar imagen<img src="https://icons.getbootstrap.com/assets/icons/pencil.svg" height="5em" *ngIf="!imageSrc"><img [src]="imageSrc" height="5em" *ngIf="imageSrc"></label>
     <input class="hidden" id="archivo" type="file" name="archivo" (change)="seleccionarFoto($event)">
   </div>
   <div class="card-body">
