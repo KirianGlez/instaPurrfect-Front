@@ -35,7 +35,7 @@ const routes: Routes = [
   {path: 'kittypost/create', component: CreatePostComponent},
   {path: 'kittypost/create/picture-form/:id', component: PictureFormComponent},
   {path: 'find', component: FindPageComponent},
-  { path: '**', redirectTo: '/prruwner' }
+  {path: '**', redirectTo: '/prruwner', pathMatch: 'full'}
 ]
 
 @NgModule({
